@@ -1,0 +1,3 @@
+[submodule "AniPy"]
+	path = AniPy
+	url = https://github.com/Jacekun/AniPy.git
