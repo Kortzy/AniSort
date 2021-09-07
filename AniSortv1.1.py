@@ -1,7 +1,10 @@
 import json
 import os
+import subprocess
 
-AL = json.load(open(os.path.join(os.getcwd(),"AniList.json")))
+subprocess.call(os.path.join("AniPy", "Main.py"), shell=True)
+Filename = input("Please enter JSON file name .json included (It's supposed to be in AniSort\AniPy\output):")
+AL = json.load(open(os.path.join("AniPy", "output", Filename)))
 AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status"]},**{"Wins":0,"Losses":0}} for d in AL if d["status"] == "COMPLETED"]
 def merge(A, B):
     if len(A) == 0:
@@ -12,14 +15,14 @@ def merge(A, B):
     IA = IB = 0
     while len(R) < len(A) + len(B):
         print(A[IA]["titleRomaji"], "or", B[IB]["titleRomaji"])
-        IN = input("which is the best?\nChoose with 1 or 2:")
-        if IN == "1":
+        Chosen = input("which is the best?\nChoose with 1 or 2:")
+        if Chosen == "1":
             print("You picked",A[IA]["titleRomaji"],":","Total Wins -",A[IA]["Wins"],"Total Losses -",A[IA]["Losses"],"Previous Score -",A[IA]["score"],"/10")
             A[IA]['Wins'] += 1
             B[IB]['Losses'] += 1
             R.append(A[IA])
             IA += 1
-        elif IN == "2":
+        elif Chosen == "2":
             print("You picked",B[IB]["titleRomaji"],":","Total Wins -",B[IB]["Wins"],"Total Losses -",B[IB]["Losses"],"Previous Score -  ",B[IB]["score"],"/10")
             A[IA]['Losses'] += 1
             B[IB]['Wins'] += 1
