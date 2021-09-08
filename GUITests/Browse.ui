@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>240</height>
+    <width>460</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,15 +19,15 @@
   <widget class="QLabel" name="Title">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>20</y>
-     <width>111</width>
-     <height>31</height>
+     <x>130</x>
+     <y>60</y>
+     <width>191</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">color:rgb(170, 255, 255);
-font: 28pt &quot;Impact&quot;;</string>
+font: 48pt &quot;Impact&quot;;</string>
    </property>
    <property name="text">
     <string>AniSort</string>
@@ -36,15 +36,15 @@ font: 28pt &quot;Impact&quot;;</string>
   <widget class="QLabel" name="Title2">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>70</y>
-     <width>71</width>
+     <x>190</x>
+     <y>160</y>
+     <width>81</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(170, 255, 255);
-font: 16pt &quot;Calibri&quot;;</string>
+font: 17pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
     <string>Json File</string>
@@ -53,9 +53,9 @@ font: 16pt &quot;Calibri&quot;;</string>
   <widget class="QLineEdit" name="JsonFile">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>491</width>
+     <x>50</x>
+     <y>180</y>
+     <width>361</width>
      <height>20</height>
     </rect>
    </property>
@@ -71,8 +71,8 @@ border-color: rgb(0, 0, 74);</string>
   <widget class="QPushButton" name="browse">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>160</y>
+     <x>130</x>
+     <y>230</y>
      <width>71</width>
      <height>23</height>
     </rect>
@@ -88,8 +88,8 @@ border-color: rgb(0, 0, 255);</string>
   <widget class="QPushButton" name="start">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>160</y>
+     <x>260</x>
+     <y>230</y>
      <width>71</width>
      <height>23</height>
     </rect>

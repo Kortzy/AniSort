@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>652</height>
+    <width>460</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,13 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(0, 0, 31);</string>
   </property>
-  <widget class="QPushButton" name="Button_1">
+  <widget class="QPushButton" name="button1">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>460</width>
-     <height>652</height>
+     <y>280</y>
+     <width>230</width>
+     <height>60</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -32,13 +32,13 @@
     <string>1</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Button_2">
+  <widget class="QPushButton" name="button2">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>0</y>
-     <width>460</width>
-     <height>652</height>
+     <x>230</x>
+     <y>280</y>
+     <width>230</width>
+     <height>60</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -48,11 +48,11 @@
     <string>2</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="Versus">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>270</y>
+     <x>180</x>
+     <y>100</y>
      <width>101</width>
      <height>81</height>
     </rect>
@@ -72,6 +72,37 @@ color: rgb(0, 0, 84);</string>
     <string>VS</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label1">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>-40</y>
+     <width>230</width>
+     <height>340</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label2">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>-40</y>
+     <width>230</width>
+     <height>340</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <zorder>label2</zorder>
+  <zorder>label1</zorder>
+  <zorder>button1</zorder>
+  <zorder>button2</zorder>
+  <zorder>Versus</zorder>
  </widget>
  <resources/>
  <connections/>
