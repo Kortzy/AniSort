@@ -1,11 +1,12 @@
 import sys
 import os
-import PyQt5.QtWidgets as qtw
-import PyQt5.uic as qtu
+import requests
 import json
-import GUITests.Functions as func
 import time
 import threading
+import PyQt5.QtWidgets as qtw
+import PyQt5.uic as qtu
+import PyQt5.QtGui as qtg
 
 #create class that contains the browse window
 class browse(qtw.QDialog):
@@ -26,10 +27,10 @@ class browse(qtw.QDialog):
     def startsort(self):
         #open and organize animeList
         AL = json.load(open(self.JsonFile.text()))
-        AL = func.DicTrim(AL)
+        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status"]},**{"Wins":0,"Losses":0}} for d in AL if d["status"] == "COMPLETED"]
         #change window
-        self.Mscreen = main_screen()
-        widget.addWidget(self.Mscreen)
+        self.screen = mainscreen()
+        widget.addWidget(self.screen)
         widget.setCurrentIndex(widget.currentIndex() + 1)
         #multithread merge_sort in background
         self.t = threading.Thread(target = self.wrapper, args = (AL,))
@@ -37,13 +38,13 @@ class browse(qtw.QDialog):
         self.t.start()
 
     def wrapper(self, AnimeList):
-        json.dump(self.Mscreen.merge_sort(AnimeList),open("Sorted_Anime_List.json","w"), indent=4)
+        json.dump(self.screen.merge_sort(AnimeList),open("Sorted_Anime_List.json","w"), indent=4)
 
 #create class that contains the main screen
-class main_screen(qtw.QDialog):
+class mainscreen(qtw.QDialog):
 
     def __init__(self):
-        super(main_screen,self).__init__()
+        super(mainscreen,self).__init__()
         qtu.loadUi("GUITests\MainScreen.ui",self)
         #create x and set it to 0
         self.x = 0
@@ -58,6 +59,18 @@ class main_screen(qtw.QDialog):
     def pushed2(self):
         self.x =2
 
+    #function to request anime covers from Anilist
+    def CoverRequest(self, AnimeID):
+        query = 'query ($id: Int) {Media (id: $id, type: ANIME) {coverImage {large}}}'
+        varQuery = {'id': AnimeID}
+
+        response = requests.post("https://graphql.anilist.co", json={'query': query, 'variables': varQuery})
+        Cover = json.loads(response.content)["data"]["Media"]["coverImage"]["large"]
+        CoverX = qtg.QImage()
+        CoverX.loadFromData(requests.get(Cover).content)
+        CoverX = qtg.QPixmap(CoverX)
+        return CoverX
+
     #merge
     def merge(self, HalfA, HalfB):
         if len(HalfA) == 0:
@@ -67,8 +80,8 @@ class main_screen(qtw.QDialog):
         R = []
         Counter1 = Counter2 = 0
         #request the cover images of the first 2 animes
-        Pixmap1 = func.CoverRequest(HalfA[Counter1]["idAnilist"])
-        Pixmap2 = func.CoverRequest(HalfB[Counter2]["idAnilist"])
+        Pixmap1 = self.CoverRequest(HalfA[Counter1]["idAnilist"])
+        Pixmap2 = self.CoverRequest(HalfB[Counter2]["idAnilist"])
         #set anime covers unto the existing labels
         self.label1.setPixmap(Pixmap1)
         self.label2.setPixmap(Pixmap2)
@@ -94,8 +107,8 @@ class main_screen(qtw.QDialog):
                 break
             if self.x != 0:
                 #request new anime covers
-                Pixmap1 = func.CoverRequest(HalfA[Counter1]["idAnilist"])
-                Pixmap2 = func.CoverRequest(HalfB[Counter2]["idAnilist"])
+                Pixmap1 = self.CoverRequest(HalfA[Counter1]["idAnilist"])
+                Pixmap2 = self.CoverRequest(HalfB[Counter2]["idAnilist"])
                 #set new anime covers unto the existing labels
                 self.label1.setPixmap(Pixmap1)
                 self.label2.setPixmap(Pixmap2)
