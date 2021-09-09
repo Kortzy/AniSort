@@ -13,7 +13,7 @@ class browse(qtw.QDialog):
 
     def __init__(self):
         super(browse,self).__init__()
-        qtu.loadUi("GUITests\Browse.ui",self)
+        qtu.loadUi("GUI\Browse.ui",self)
 
         #set function to buttons
         self.browse.clicked.connect(self.browsefile)
@@ -45,7 +45,7 @@ class mainscreen(qtw.QDialog):
 
     def __init__(self):
         super(mainscreen,self).__init__()
-        qtu.loadUi("GUITests\MainScreen.ui",self)
+        qtu.loadUi("GUI\MainScreen.ui",self)
         #create x and set it to 0
         self.x = 0
         #set function to buttons
