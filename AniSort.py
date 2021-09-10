@@ -26,19 +26,11 @@ class browse(qtw.QDialog):
     #start the sorting process
     def startsort(self):
         #open and organize animeList
-        AL = json.load(open(self.JsonFile.text()))
-        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status"]},**{"Wins":0,"Losses":0}} for d in AL if d["status"] == "COMPLETED"]
         #change window
         self.screen = mainscreen()
         widget.addWidget(self.screen)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-        #multithread merge_sort in background
-        self.t = threading.Thread(target = self.wrapper, args = (AL,))
-        self.t.daemon = True
-        self.t.start()
 
-    def wrapper(self, AnimeList):
-        json.dump(self.screen.merge_sort(AnimeList),open("Sorted_Anime_List.json","w"), indent=4)
 
 #create class that contains the main screen
 class mainscreen(qtw.QDialog):
@@ -46,18 +38,30 @@ class mainscreen(qtw.QDialog):
     def __init__(self):
         super(mainscreen,self).__init__()
         qtu.loadUi("GUI\MainScreen.ui",self)
+
+        #load and organize JSON file
+        AL = json.load(open(bro.JsonFile.text()))
+        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status"]},**{"Wins":0,"Losses":0}} for d in AL if d["status"] == "COMPLETED"]
         #create x and set it to 0
         self.x = 0
         #set function to buttons
         self.button1.clicked.connect(self.pushed1)
         self.button2.clicked.connect(self.pushed2)
+        #multithread mergesort in background
+        self.t = threading.Thread(target = self.wrapper, args = (AL,))
+        self.t.daemon = True
+        self.t.start()
+
+    #dump into JSON file mergesort output
+    def wrapper(self, AnimeList):
+        json.dump(self.mergesort(AnimeList),open("Sorted_Anime_List.json","w"), indent = 4)
     
     #change x value to meet if conditions
     def pushed1(self):
         self.x = 1
 
     def pushed2(self):
-        self.x =2
+        self.x = 2
 
     #function to request anime covers from Anilist
     def CoverRequest(self, AnimeID):
@@ -120,18 +124,19 @@ class mainscreen(qtw.QDialog):
             time.sleep(0.5)
         #return the sorted list
         return R
-    def merge_sort(self, array):
+    def mergesort(self, array):
         if len(array) < 2:
             return array
         MID = len(array) // 2
         return self.merge(
-            self.merge_sort(array[:MID]),
-            self.merge_sort(array[MID:]),
+            self.mergesort(array[:MID]),
+            self.mergesort(array[MID:]),
             )      
 #create the app
-app=qtw.QApplication(sys.argv)
+app = qtw.QApplication(sys.argv)
 widget = qtw.QStackedWidget()
-widget.addWidget(browse())
+bro = browse()
+widget.addWidget(bro)
 widget.setFixedWidth(460)
 widget.setFixedHeight(340)
 widget.show()
