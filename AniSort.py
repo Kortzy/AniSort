@@ -1,5 +1,6 @@
 import sys
 import os
+import csv
 import requests
 import json
 import time
@@ -7,6 +8,7 @@ import threading
 import PyQt5.QtWidgets as qtw
 import PyQt5.uic as qtu
 import PyQt5.QtGui as qtg
+
 
 #create class that contains the browse window
 class browse(qtw.QDialog):
@@ -17,14 +19,14 @@ class browse(qtw.QDialog):
 
         #set function to buttons
         self.browse.clicked.connect(self.browsefile)
-        self.start.clicked.connect(self.startsort)
+        self.start.clicked.connect(self.nextwindow)
 
     #open file browser and copy file location in text box
     def browsefile(self):
         FileName = qtw.QFileDialog.getOpenFileName(self, "Open file", os.getcwd(),"json files (*.json)")
         self.JsonFile.setText(FileName[0])
     #start the sorting process
-    def startsort(self):
+    def nextwindow(self):
         #open and organize animeList
         #change window
         self.screen = mainscreen()
@@ -41,7 +43,7 @@ class mainscreen(qtw.QDialog):
 
         #load and organize JSON file
         AL = json.load(open(bro.JsonFile.text()))
-        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status"]},**{"Wins":0,"Losses":0}} for d in AL if d["status"] == "COMPLETED"]
+        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status","progress"]},**{"Wins":0,"Losses":0,"Matches":0}} for d in AL if d["status"] == "COMPLETED"]
         #create x and set it to 0
         self.x = 0
         #set function to buttons
@@ -55,7 +57,15 @@ class mainscreen(qtw.QDialog):
     #dump into JSON file mergesort output
     def wrapper(self, AnimeList):
         json.dump(self.mergesort(AnimeList),open("Sorted_Anime_List.json","w"), indent = 4)
-    
+        self.JsonToCsv("Sorted_Anime_List.json", "Sorted_Anime_List.csv")
+        
+    def JsonToCsv(self, jsonname, csvname):
+        self.jsonfile = json.load(open(jsonname))
+        self.csvwriter = csv.writer(open(csvname, 'w', newline='',encoding='utf-8-sig'))
+        self.csvwriter.writerow(self.jsonfile[0].keys())
+        for dic in self.jsonfile:
+            self.csvwriter.writerow(dic.values())
+ 
     #change x value to meet if conditions
     def pushed1(self):
         self.x = 1
@@ -97,9 +107,17 @@ class mainscreen(qtw.QDialog):
         #while loop to select best anime
         while len(R) < len(HalfA) + len(HalfB):
             if self.x == 1:
+                HalfA[Counter1]["Wins"] += 1
+                HalfA[Counter1]["Matches"] += 1
+                HalfB[Counter2]["Losses"] += 1
+                HalfB[Counter2]["Matches"] += 1
                 R.append(HalfA[Counter1])
                 Counter1 += 1
             elif self.x == 2:
+                HalfB[Counter2]["Wins"] += 1
+                HalfB[Counter2]["Matches"] += 1
+                HalfA[Counter1]["Losses"] += 1
+                HalfA[Counter1]["Matches"] += 1
                 R.append(HalfB[Counter2])
                 Counter2 += 1
             #break when 1 of the lists ends
@@ -131,7 +149,7 @@ class mainscreen(qtw.QDialog):
         return self.merge(
             self.mergesort(array[:MID]),
             self.mergesort(array[MID:]),
-            )      
+            )  
 #create the app
 app = qtw.QApplication(sys.argv)
 widget = qtw.QStackedWidget()
