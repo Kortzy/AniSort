@@ -9,6 +9,24 @@ import PyQt5.QtWidgets as qtw
 import PyQt5.uic as qtu
 import PyQt5.QtGui as qtg
 
+#function to request anime covers from Anilist
+def CoverRequest(AnimeID):
+    query = 'query ($id: Int) {Media (id: $id, type: ANIME) {coverImage {large}}}'
+    varQuery = {'id': AnimeID}
+
+    response = requests.post("https://graphql.anilist.co", json={'query': query, 'variables': varQuery})
+    Cover = json.loads(response.content)["data"]["Media"]["coverImage"]["large"]
+    CoverX = qtg.QImage()
+    CoverX.loadFromData(requests.get(Cover).content)
+    CoverX = qtg.QPixmap(CoverX)
+    return CoverX
+
+def JsonToCsv(jsonname, csvname):
+    jsonfile = json.load(open(jsonname))
+    csvwriter = csv.writer(open(csvname, 'w', newline='',encoding='utf-8-sig'))
+    csvwriter.writerow(jsonfile[0].keys())
+    for dic in jsonfile:
+        csvwriter.writerow(dic.values())
 
 #create class that contains the browse window
 class browse(qtw.QDialog):
@@ -43,7 +61,13 @@ class mainscreen(qtw.QDialog):
 
         #load and organize JSON file
         AL = json.load(open(bro.JsonFile.text()))
-        AL = [{**{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status","progress"]},**{"Wins":0,"Losses":0,"Matches":0}} for d in AL if d["status"] == "COMPLETED"]
+        AL = [
+            {
+                **{k:v for k,v in d.items() if k not in ["synonyms","format","idMal","private","notes","status","progress"]},
+                **{"Wins":0,"Losses":0,"Matches":0}
+            }
+            for d in AL if d["status"] == "COMPLETED" and d["score"] >= 6 and d["format"] in ["TV","TV_SHORT"]
+        ]
         #create x and set it to 0
         self.x = 0
         #set function to buttons
@@ -57,33 +81,14 @@ class mainscreen(qtw.QDialog):
     #dump into JSON file mergesort output
     def wrapper(self, AnimeList):
         json.dump(self.mergesort(AnimeList),open("Sorted_Anime_List.json","w"), indent = 4)
-        self.JsonToCsv("Sorted_Anime_List.json", "Sorted_Anime_List.csv")
+        JsonToCsv("Sorted_Anime_List.json", "Sorted_Anime_List.csv")
         
-    def JsonToCsv(self, jsonname, csvname):
-        self.jsonfile = json.load(open(jsonname))
-        self.csvwriter = csv.writer(open(csvname, 'w', newline='',encoding='utf-8-sig'))
-        self.csvwriter.writerow(self.jsonfile[0].keys())
-        for dic in self.jsonfile:
-            self.csvwriter.writerow(dic.values())
- 
     #change x value to meet if conditions
     def pushed1(self):
         self.x = 1
 
     def pushed2(self):
         self.x = 2
-
-    #function to request anime covers from Anilist
-    def CoverRequest(self, AnimeID):
-        query = 'query ($id: Int) {Media (id: $id, type: ANIME) {coverImage {large}}}'
-        varQuery = {'id': AnimeID}
-
-        response = requests.post("https://graphql.anilist.co", json={'query': query, 'variables': varQuery})
-        Cover = json.loads(response.content)["data"]["Media"]["coverImage"]["large"]
-        CoverX = qtg.QImage()
-        CoverX.loadFromData(requests.get(Cover).content)
-        CoverX = qtg.QPixmap(CoverX)
-        return CoverX
 
     #merge
     def merge(self, HalfA, HalfB):
@@ -94,8 +99,8 @@ class mainscreen(qtw.QDialog):
         R = []
         Counter1 = Counter2 = 0
         #request the cover images of the first 2 animes
-        Pixmap1 = self.CoverRequest(HalfA[Counter1]["idAnilist"])
-        Pixmap2 = self.CoverRequest(HalfB[Counter2]["idAnilist"])
+        Pixmap1 = CoverRequest(HalfA[Counter1]["idAnilist"])
+        Pixmap2 = CoverRequest(HalfB[Counter2]["idAnilist"])
         #set anime covers unto the existing labels
         self.label1.setPixmap(Pixmap1)
         self.label2.setPixmap(Pixmap2)
@@ -129,8 +134,8 @@ class mainscreen(qtw.QDialog):
                 break
             if self.x != 0:
                 #request new anime covers
-                Pixmap1 = self.CoverRequest(HalfA[Counter1]["idAnilist"])
-                Pixmap2 = self.CoverRequest(HalfB[Counter2]["idAnilist"])
+                Pixmap1 = CoverRequest(HalfA[Counter1]["idAnilist"])
+                Pixmap2 = CoverRequest(HalfB[Counter2]["idAnilist"])
                 #set new anime covers unto the existing labels
                 self.label1.setPixmap(Pixmap1)
                 self.label2.setPixmap(Pixmap2)
