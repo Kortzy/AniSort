@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(0, 0, 31);</string>
   </property>
-  <widget class="QPushButton" name="button1">
+  <widget class="QPushButton" name="left_button">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -26,13 +26,14 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(170, 255, 255);</string>
+    <string notr="true">background-color: rgb(170, 255, 255);
+color: rgb(0, 0, 76);</string>
    </property>
    <property name="text">
     <string>1</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button2">
+  <widget class="QPushButton" name="right_button">
    <property name="geometry">
     <rect>
      <x>230</x>
@@ -42,19 +43,20 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(170, 255, 255);</string>
+    <string notr="true">background-color: rgb(170, 255, 255);
+color: rgb(0, 0, 76);</string>
    </property>
    <property name="text">
     <string>2</string>
    </property>
   </widget>
-  <widget class="QLabel" name="Versus">
+  <widget class="QLabel" name="versus_label">
    <property name="geometry">
     <rect>
      <x>180</x>
      <y>100</y>
-     <width>101</width>
-     <height>81</height>
+     <width>111</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -72,7 +74,7 @@ color: rgb(0, 0, 84);</string>
     <string>VS</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label1">
+  <widget class="QLabel" name="left_label">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -82,10 +84,10 @@ color: rgb(0, 0, 84);</string>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label2">
+  <widget class="QLabel" name="right_label">
    <property name="geometry">
     <rect>
      <x>230</x>
@@ -95,14 +97,14 @@ color: rgb(0, 0, 84);</string>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
-  <zorder>label2</zorder>
-  <zorder>label1</zorder>
-  <zorder>button1</zorder>
-  <zorder>button2</zorder>
-  <zorder>Versus</zorder>
+  <zorder>right_label</zorder>
+  <zorder>left_label</zorder>
+  <zorder>left_button</zorder>
+  <zorder>right_button</zorder>
+  <zorder>versus_label</zorder>
  </widget>
  <resources/>
  <connections/>

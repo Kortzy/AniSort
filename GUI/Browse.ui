@@ -16,12 +16,12 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(0, 0, 31);</string>
   </property>
-  <widget class="QLabel" name="Title">
+  <widget class="QLabel" name="app_title">
    <property name="geometry">
     <rect>
      <x>130</x>
      <y>60</y>
-     <width>191</width>
+     <width>201</width>
      <height>61</height>
     </rect>
    </property>
@@ -33,7 +33,7 @@ font: 48pt &quot;Impact&quot;;</string>
     <string>AniSort</string>
    </property>
   </widget>
-  <widget class="QLabel" name="Title2">
+  <widget class="QLabel" name="textbox_title">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -50,7 +50,7 @@ font: 17pt &quot;Calibri&quot;;</string>
     <string>Json File</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="JsonFile">
+  <widget class="QLineEdit" name="textbox">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -62,13 +62,14 @@ font: 17pt &quot;Calibri&quot;;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(170, 255, 255);
 alternate-background-color: rgb(170, 170, 255);
-border-color: rgb(0, 0, 74);</string>
+border-color: rgb(0, 0, 74);
+color: rgb(0, 0, 74);</string>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="browse">
+  <widget class="QPushButton" name="browse_button">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -79,13 +80,14 @@ border-color: rgb(0, 0, 74);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 255, 255);
-border-color: rgb(0, 0, 255);</string>
+border-color: rgb(0, 0, 255);
+color: rgb(0, 0, 74);</string>
    </property>
    <property name="text">
     <string>Browse</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="start">
+  <widget class="QPushButton" name="start_button">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -96,7 +98,8 @@ border-color: rgb(0, 0, 255);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 255, 255);
-border-color: rgb(0, 0, 255);</string>
+border-color: rgb(0, 0, 255);
+color: rgb(0, 0, 74);</string>
    </property>
    <property name="text">
     <string>Start</string>
