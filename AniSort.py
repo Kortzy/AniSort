@@ -33,7 +33,7 @@ class browse(qtw.QDialog):
 
     def __init__(self):
         super(browse,self).__init__()
-        qtu.loadUi("GUI\Browse.ui",self)
+        qtu.loadUi(os.path.join("GUI","Browse.ui"),self)
 
         #set function to buttons
         self.browse.clicked.connect(self.browsefile)
@@ -57,7 +57,7 @@ class mainscreen(qtw.QDialog):
 
     def __init__(self):
         super(mainscreen,self).__init__()
-        qtu.loadUi("GUI\MainScreen.ui",self)
+        qtu.loadUi(os.path.join("GUI","MainScreen.ui"),self)
 
         #load and organize JSON file
         AL = json.load(open(bro.JsonFile.text()))
