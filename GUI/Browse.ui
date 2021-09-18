@@ -62,11 +62,10 @@ font: 17pt &quot;Calibri&quot;;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(170, 255, 255);
 alternate-background-color: rgb(170, 170, 255);
-border-color: rgb(0, 0, 74);
-color: rgb(0, 0, 0);</string>
+border-color: rgb(0, 0, 74);</string>
    </property>
    <property name="text">
-    <string>gey</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="browse">
@@ -80,8 +79,7 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 255, 255);
-border-color: rgb(0, 0, 255);
-color: rgb(0, 0, 0);</string>
+border-color: rgb(0, 0, 255);</string>
    </property>
    <property name="text">
     <string>Browse</string>
@@ -98,7 +96,6 @@ color: rgb(0, 0, 0);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 255, 255);
-color: rgb(0, 0, 0);
 border-color: rgb(0, 0, 255);</string>
    </property>
    <property name="text">

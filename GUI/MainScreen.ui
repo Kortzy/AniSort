@@ -26,8 +26,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(170, 255, 255);
-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(170, 255, 255);</string>
    </property>
    <property name="text">
     <string>1</string>
@@ -43,8 +42,7 @@ color: rgb(0, 0, 0);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(170, 255, 255);
-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(170, 255, 255);</string>
    </property>
    <property name="text">
     <string>2</string>
@@ -84,7 +82,7 @@ color: rgb(0, 0, 84);</string>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>TextLabel</string>
    </property>
   </widget>
   <widget class="QLabel" name="label2">
@@ -97,7 +95,7 @@ color: rgb(0, 0, 84);</string>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>TextLabel</string>
    </property>
   </widget>
   <zorder>label2</zorder>
